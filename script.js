@@ -50,66 +50,58 @@ function logoutUser() {
 }
 
 async function searchHouseholdData() {
+    const output = document.getElementById("searchOutput");
+    output.innerHTML = "Loading...";
+
     try {
         const id = document.getElementById("householdId").value.trim();
 
         if (!id) {
-            alert("Enter Household ID");
+            output.innerHTML = "Please enter Household ID.";
             return;
         }
 
         const res = await fetch(`${BACKEND_URL}/household/${id}`);
-
-        if (!res.ok) {
-            throw new Error("API error");
-        }
-
         const data = await res.json();
 
-        const rows = data.results || data;
+        console.log("Correct data:", data);
+
+        // IMPORTANT FIX
+        const rows = data.results;
 
         if (!rows || rows.length === 0) {
-            document.getElementById("searchOutput").innerHTML = "No data found.";
+            output.innerHTML = "No records found.";
             return;
         }
 
         let html = `
-            <table>
+            <table border="1">
                 <tr>
-                    <th>Household</th>
-                    <th>Basket</th>
-                    <th>Date</th>
                     <th>Product</th>
                     <th>Department</th>
                     <th>Commodity</th>
                     <th>Spend</th>
-                    <th>Units</th>
                 </tr>
         `;
 
-        rows.forEach(row => {
+        rows.slice(0, 20).forEach(row => {
             html += `
                 <tr>
-                    <td>${row.HSHD_NUM}</td>
-                    <td>${row.BASKET_NUM}</td>
-                    <td>${row.DATE}</td>
                     <td>${row.PRODUCT_NUM}</td>
                     <td>${row.DEPARTMENT}</td>
                     <td>${row.COMMODITY}</td>
                     <td>$${Number(row.SPEND).toFixed(2)}</td>
-                    <td>${row.UNITS}</td>
                 </tr>
             `;
         });
 
         html += "</table>";
-        document.getElementById("searchOutput").innerHTML = html;
+        output.innerHTML = html;
 
-    } catch (err) {
-        console.error(err);
-        document.getElementById("searchOutput").innerText = "Error loading data";
+    } catch (error) {
+        console.error(error);
+        output.innerHTML = "Error loading data.";
     }
-}
 }
 
 async function loadDashboard() {
