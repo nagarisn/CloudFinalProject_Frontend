@@ -1,4 +1,4 @@
-const BACKEND_URL = "retail-fastapi-ss-acgxdhamh2dybjeg.eastus2-01.azurewebsites.net";
+const BACKEND_URL = "https://retail-fastapi-ss-acgxdhamh2dybjeg.eastus2-01.azurewebsites.net";
 
 let topProductsChart, basketChart, churnChart;
 
