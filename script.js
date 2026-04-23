@@ -66,17 +66,50 @@ async function searchHouseholdData() {
 
         const data = await res.json();
 
-        document.getElementById("searchOutput").innerHTML = `
-            <p><b>Total Spend:</b> $${data.total_spend.toFixed(2)}</p>
-            <p><b>Total Baskets:</b> ${data.total_baskets}</p>
-            <p><b>Total Items:</b> ${data.total_items}</p>
-            <p><b>Total Units:</b> ${data.total_units}</p>
+        const rows = data.results || data;
+
+        if (!rows || rows.length === 0) {
+            document.getElementById("searchOutput").innerHTML = "No data found.";
+            return;
+        }
+
+        let html = `
+            <table>
+                <tr>
+                    <th>Household</th>
+                    <th>Basket</th>
+                    <th>Date</th>
+                    <th>Product</th>
+                    <th>Department</th>
+                    <th>Commodity</th>
+                    <th>Spend</th>
+                    <th>Units</th>
+                </tr>
         `;
+
+        rows.forEach(row => {
+            html += `
+                <tr>
+                    <td>${row.HSHD_NUM}</td>
+                    <td>${row.BASKET_NUM}</td>
+                    <td>${row.DATE}</td>
+                    <td>${row.PRODUCT_NUM}</td>
+                    <td>${row.DEPARTMENT}</td>
+                    <td>${row.COMMODITY}</td>
+                    <td>$${Number(row.SPEND).toFixed(2)}</td>
+                    <td>${row.UNITS}</td>
+                </tr>
+            `;
+        });
+
+        html += "</table>";
+        document.getElementById("searchOutput").innerHTML = html;
 
     } catch (err) {
         console.error(err);
         document.getElementById("searchOutput").innerText = "Error loading data";
     }
+}
 }
 
 async function loadDashboard() {
