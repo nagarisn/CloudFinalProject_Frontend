@@ -50,53 +50,33 @@ function logoutUser() {
 }
 
 async function searchHouseholdData() {
-    const id = document.getElementById("householdId").value.trim();
+    try {
+        const id = document.getElementById("householdId").value.trim();
 
-    if (!id) {
-        alert("Please enter a Household ID.");
-        return;
-    }
+        if (!id) {
+            alert("Enter Household ID");
+            return;
+        }
 
-    const response = await fetch(`${BACKEND_URL}/household/${id}`);
-    const data = await response.json();
-    const results = data.results;
+        const res = await fetch(`${BACKEND_URL}/household/${id}`);
 
-    if (!results || results.length === 0) {
-        document.getElementById("searchOutput").innerHTML = "<p>No results found for this household ID.</p>";
-        return;
-    }
+        if (!res.ok) {
+            throw new Error("API error");
+        }
 
-    let html = `
-        <table>
-            <tr>
-                <th>HSHD_NUM</th>
-                <th>Basket</th>
-                <th>Date</th>
-                <th>Product</th>
-                <th>Department</th>
-                <th>Commodity</th>
-                <th>Spend</th>
-                <th>Units</th>
-            </tr>
-    `;
+        const data = await res.json();
 
-    results.forEach(row => {
-        html += `
-            <tr>
-                <td>${row.HSHD_NUM}</td>
-                <td>${row.BASKET_NUM}</td>
-                <td>${new Date(row.DATE).toLocaleDateString()}</td>
-                <td>${row.PRODUCT_NUM}</td>
-                <td>${row.DEPARTMENT}</td>
-                <td>${row.COMMODITY}</td>
-                <td>${Number(row.SPEND).toFixed(2)}</td>
-                <td>${row.UNITS}</td>
-            </tr>
+        document.getElementById("searchOutput").innerHTML = `
+            <p><b>Total Spend:</b> $${data.total_spend.toFixed(2)}</p>
+            <p><b>Total Baskets:</b> ${data.total_baskets}</p>
+            <p><b>Total Items:</b> ${data.total_items}</p>
+            <p><b>Total Units:</b> ${data.total_units}</p>
         `;
-    });
 
-    html += "</table>";
-    document.getElementById("searchOutput").innerHTML = html;
+    } catch (err) {
+        console.error(err);
+        document.getElementById("searchOutput").innerText = "Error loading data";
+    }
 }
 
 async function loadDashboard() {
