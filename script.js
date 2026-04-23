@@ -122,18 +122,18 @@ async function loadDashboard() {
         document.getElementById("avgSpend").innerText = "Avg Spend: $" + dashboardData.avg_spend.toFixed(2);
         document.getElementById("totalUnits").innerText = "Total Units: " + dashboardData.total_units;
 
-        //const topRes = await fetch(`${BACKEND_URL}/top-products/${id}`);
-        //const topData = await topRes.json();
+        const topRes = await fetch(`${BACKEND_URL}/top-products/${id}`);
+        const topData = await topRes.json();
 
-        //let html = "<ul>";
-        //topData.forEach(item => {
-       //     html += `<li>${item.COMMODITY} - $${Number(item.total_spend).toFixed(2)}</li>`;
-      //  });
-     //   html += "</ul>";
-    //    document.getElementById("topProducts").innerHTML = html;
+        let html = "<ul>";
+        topData.forEach(item => {
+            html += `<li>${item.COMMODITY} - $${Number(item.total_spend).toFixed(2)}</li>`;
+        });
+        html += "</ul>";
+        document.getElementById("topProducts").innerHTML = html;
 
-      //  const labels = topData.map(i => i.COMMODITY);
-      //  const values = topData.map(i => Number(i.total_spend));
+        const labels = topData.map(i => i.COMMODITY);
+        const values = topData.map(i => Number(i.total_spend));
 
         if (topProductsChart) topProductsChart.destroy();
 
