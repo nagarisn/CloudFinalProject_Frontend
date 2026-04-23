@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portal</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadPortalUser()">
+    <div class="topbar">
+        <div>Welcome, <span id="welcomeUser"></span></div>
+        <button onclick="logoutUser()">Logout</button>
+    </div>
+
+    <div class="page-container">
+        <div class="option-grid">
+            <div class="option-box">
+                <h3>Explore Dashboard Insights</h3>
+                <button onclick="window.location.href='dashboard.html'">Open Dashboard</button>
+            </div>
+            <div class="option-box">
+                <h3>Search Data</h3>
+                <button onclick="window.location.href='search.html'">Search Household Data</button>
+            </div>
+            <div class="option-box">
+                <h3>Upload New Data</h3>
+                <button onclick="window.location.href='upload.html'">Upload Files</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

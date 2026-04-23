@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadPortalUser()">
+    <div class="topbar">
+        <div>Welcome, <span id="welcomeUser"></span></div>
+        <button onclick="window.location.href='portal.html'">Back to Portal</button>
+    </div>
+
+    <div class="page-container">
+        <div class="section">
+            <h3>Upload New Data</h3>
+            <input type="file" id="dataFile">
+            <button onclick="uploadDataFile()">Upload</button>
+            <p id="uploadMessage"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

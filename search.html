@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Data</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onload="loadPortalUser()">
+    <div class="topbar">
+        <div>Welcome, <span id="welcomeUser"></span></div>
+        <button onclick="window.location.href='portal.html'">Back to Portal</button>
+    </div>
+
+    <div class="page-container">
+        <div class="section">
+            <h3>Search Household Data</h3>
+            <input type="number" id="householdId" placeholder="Enter Household ID">
+            <button onclick="searchHouseholdData()">Search</button>
+            <div id="searchOutput"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
