@@ -1,8 +1,11 @@
+* { box-sizing: border-box; }
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
     margin: 0;
-    background: #f4f7fb;
-    color: #222;
+    background: linear-gradient(135deg, #f4f7fb 0%, #e8eef9 100%);
+    color: #1f2937;
+    min-height: 100vh;
 }
 
 .center-page {
@@ -10,139 +13,217 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
 }
 
 .card {
     background: white;
-    padding: 30px;
-    border-radius: 14px;
-    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-    width: 380px;
+    padding: 40px;
+    border-radius: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+    width: 100%;
+    max-width: 420px;
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .card h2, .card h3 {
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
+    color: #1e293b;
+    font-weight: 700;
 }
 
 input, button {
     width: 100%;
-    padding: 12px;
+    padding: 13px 16px;
     margin-bottom: 14px;
-    box-sizing: border-box;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    border-radius: 10px;
+    border: 1.5px solid #e2e8f0;
+    font-size: 15px;
+    transition: all 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
 }
 
 button {
-    background: #0d6efd;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     border: none;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
 }
 
 button:hover {
-    background: #0a58ca;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(102, 126, 234, 0.45);
 }
+
+button:active { transform: translateY(0); }
 
 a {
-    color: #0d6efd;
+    color: #667eea;
     text-decoration: none;
+    font-weight: 500;
 }
 
+a:hover { text-decoration: underline; }
+
 .topbar {
-    background: #0d6efd;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
     color: white;
-    padding: 18px 24px;
+    padding: 18px 32px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
+
+.topbar div { font-size: 16px; font-weight: 500; }
+.topbar span { color: #93c5fd; font-weight: 700; }
 
 .topbar button {
     width: auto;
     margin: 0;
     background: white;
-    color: #0d6efd;
-    padding: 8px 16px;
+    color: #1e293b;
+    padding: 9px 20px;
+    box-shadow: none;
+    font-size: 14px;
+}
+
+.topbar button:hover {
+    background: #f1f5f9;
+    transform: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
 }
 
 .page-container {
-    max-width: 1100px;
-    margin: 25px auto;
-    padding: 0 20px;
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 24px;
 }
 
 .option-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
+    gap: 24px;
 }
 
 .option-box {
     background: white;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    border-radius: 14px;
+    padding: 36px 24px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
     text-align: center;
+    transition: all 0.25s;
+    border: 1px solid #e5e7eb;
+}
+
+.option-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(102,126,234,0.18);
+    border-color: #667eea;
 }
 
 .option-box h3 {
-    margin-bottom: 15px;
+    margin-bottom: 12px;
+    color: #1e293b;
 }
 
 .section {
     background: white;
-    padding: 20px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    padding: 28px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    border: 1px solid #f1f5f9;
+}
+
+.section h2 {
+    margin-top: 0;
+    color: #1e293b;
+    font-size: 22px;
+    border-left: 4px solid #667eea;
+    padding-left: 12px;
+}
+
+.section h3 {
+    color: #334155;
+    margin-top: 24px;
+    font-size: 17px;
 }
 
 .dashboard-grid {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    margin-top: 15px;
-    margin-bottom: 20px;
+    gap: 16px;
+    margin-top: 18px;
+    margin-bottom: 8px;
 }
 
 .metric-box {
-    background: #eef5ff;
-    border-left: 5px solid #0d6efd;
-    padding: 15px;
-    border-radius: 8px;
+    background: linear-gradient(135deg, #eef2ff 0%, #e0e7ff 100%);
+    border-left: 4px solid #667eea;
+    padding: 18px 14px;
+    border-radius: 10px;
     text-align: center;
-    font-weight: bold;
+    font-weight: 600;
+    font-size: 14px;
+    color: #1e293b;
+    transition: transform 0.2s;
 }
+
+.metric-box:hover { transform: translateY(-2px); }
 
 table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 16px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
-table, th, td {
-    border: 1px solid #ccc;
-}
+table, th, td { border: none; }
 
 th {
-    background: #0d6efd;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
-    padding: 10px;
+    padding: 12px 10px;
+    font-weight: 600;
+    text-align: center;
+    font-size: 14px;
 }
 
 td {
-    padding: 8px;
+    padding: 10px;
     text-align: center;
+    border-bottom: 1px solid #f1f5f9;
+    font-size: 14px;
 }
 
+tr:nth-child(even) td { background: #f9fafb; }
+tr:hover td { background: #eef2ff; }
+
 .analysis-box {
-    background: #fafafa;
-    padding: 16px;
+    background: #f9fafb;
+    padding: 18px;
     border-radius: 10px;
     margin-top: 15px;
+    border: 1px solid #e5e7eb;
 }
 
 .chart-wrap {
@@ -151,13 +232,14 @@ td {
     margin: 20px auto;
 }
 
-ul {
-    padding-left: 20px;
-}
+ul { padding-left: 22px; line-height: 1.8; }
+li { color: #334155; }
 
 @media (max-width: 900px) {
     .dashboard-grid,
     .option-grid {
         grid-template-columns: 1fr;
     }
+    .page-container { padding: 0 16px; }
+    .section { padding: 20px; }
 }
