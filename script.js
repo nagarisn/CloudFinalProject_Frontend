@@ -293,3 +293,58 @@ async function uploadDataFile() {
     const result = await response.json();
     document.getElementById("uploadMessage").innerText = result.message;
 }
+
+async function loadMLInsights() {
+    document.getElementById("mlClvSummary").innerHTML = "Running models...";
+    document.getElementById("mlBasketTable").innerHTML = "";
+    document.getElementById("mlChurnSummary").innerHTML = "";
+
+    try {
+        const [clvRes, basketRes, churnRes] = await Promise.all([
+            fetch(`${BACKEND_URL}/ml/clv`).then(r => r.json()),
+            fetch(`${BACKEND_URL}/ml/basket`).then(r => r.json()),
+            fetch(`${BACKEND_URL}/ml/churn`).then(r => r.json())
+        ]);
+
+        // CLV
+        if (clvRes.error) {
+            document.getElementById("mlClvSummary").innerHTML = "CLV: " + clvRes.error;
+        } else {
+            document.getElementById("mlClvSummary").innerHTML =
+                `<p><b>${clvRes.model}</b><br>Linear R²: ${clvRes.linear_r2.toFixed(3)} | RF R²: ${clvRes.rf_r2.toFixed(3)}</p>`;
+            let h = "<table border='1'><tr><th>HSHD_NUM</th><th>Predicted CLV</th><th>Actual Spend</th></tr>";
+            clvRes.top_high_value_households.forEach(r => {
+                h += `<tr><td>${r.HSHD_NUM}</td><td>$${Number(r.predicted_clv).toFixed(2)}</td><td>$${Number(r.total_spend).toFixed(2)}</td></tr>`;
+            });
+            document.getElementById("mlClvTable").innerHTML = h + "</table>";
+        }
+
+        // Basket association rules
+        if (basketRes.error) {
+            document.getElementById("mlBasketTable").innerHTML = basketRes.error;
+        } else {
+            let h = `<p>${basketRes.n_baskets} baskets analyzed. Top rules by lift:</p>`;
+            h += "<table border='1'><tr><th>Item A</th><th>Item B</th><th>Support</th><th>Confidence A→B</th><th>Lift</th><th>Co-purchases</th></tr>";
+            basketRes.top_rules.forEach(r => {
+                h += `<tr><td>${r.item_a}</td><td>${r.item_b}</td><td>${r.support}</td><td>${r.confidence_a_to_b}</td><td>${r.lift}</td><td>${r.co_purchase_count}</td></tr>`;
+            });
+            document.getElementById("mlBasketTable").innerHTML = h + "</table>";
+        }
+
+        // Churn
+        if (churnRes.error) {
+            document.getElementById("mlChurnSummary").innerHTML = "Churn: " + churnRes.error;
+        } else {
+            document.getElementById("mlChurnSummary").innerHTML =
+                `<p><b>${churnRes.model}</b><br>GB Accuracy: ${churnRes.gb_accuracy.toFixed(3)} | LR Accuracy: ${churnRes.lr_accuracy.toFixed(3)} | Churn Rate: ${(churnRes.churn_rate*100).toFixed(1)}%</p>`;
+            let h = "<table border='1'><tr><th>HSHD_NUM</th><th>Churn Probability</th><th>Total Spend</th><th>Baskets</th></tr>";
+            churnRes.top_at_risk_households.forEach(r => {
+                h += `<tr><td>${r.HSHD_NUM}</td><td>${(r.churn_probability*100).toFixed(1)}%</td><td>$${Number(r.total_spend).toFixed(2)}</td><td>${r.basket_count}</td></tr>`;
+            });
+            document.getElementById("mlChurnTable").innerHTML = h + "</table>";
+        }
+    } catch (e) {
+        console.error(e);
+        document.getElementById("mlClvSummary").innerHTML = "Error: " + e.message;
+    }
+}

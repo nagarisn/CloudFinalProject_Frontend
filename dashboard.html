@@ -64,6 +64,23 @@
                 <canvas id="churnChart"></canvas>
             </div>
         </div>
+
+        <div class="section">
+            <h2>Machine Learning Insights</h2>
+            <button onclick="loadMLInsights()">Run ML Models</button>
+            <p style="color:#666;font-size:13px">Runs Linear Regression (CLV), Association Rules (Basket), and Gradient Boosting (Churn). May take ~10s.</p>
+
+            <h3>Customer Lifetime Value (Linear Regression)</h3>
+            <div id="mlClvSummary"></div>
+            <div id="mlClvTable"></div>
+
+            <h3>Basket Association Rules (Cross-Sell)</h3>
+            <div id="mlBasketTable"></div>
+
+            <h3>Churn Prediction (Gradient Boosting)</h3>
+            <div id="mlChurnSummary"></div>
+            <div id="mlChurnTable"></div>
+        </div>
     </div>
 
     <script src="script.js"></script>
